@@ -27,16 +27,10 @@ def handle_university(message):
 
 def handle_faculties(message):
     if message.text in MIREA_FACULTIES:
-        url = MIREA_URL_FACULTIES[MIREA_FACULTIES.index(message.text)]
-        budget_places = MIREA_BUDGET_PLACES[MIREA_FACULTIES.index(message.text)]
-        place = mirea_parser(url)
-        bot.send_message(message.chat.id, f'Бюджетных мест: {budget_places} \nМесто в списке: {place}')
+        info_send_message(message, MIREA_FACULTIES, MIREA_URL_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser)
 
     if message.text in MPEI_FACULTIES:
-        url = MPEI_URL_FACULTIES[MPEI_FACULTIES.index(message.text)]
-        budget_places = MPEI_BUDGET_PLACES[MPEI_FACULTIES.index(message.text)]
-        place = mpei_parser(url)
-        bot.send_message(message.chat.id, f'Бюджетных мест: {budget_places} \nМесто в списке: {place}')
+        info_send_message(message, MPEI_FACULTIES, MPEI_URL_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser)
 
 
 def handle_return(message):
