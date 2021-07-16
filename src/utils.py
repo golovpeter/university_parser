@@ -33,3 +33,15 @@ def mirea_parser(url):
 
     if SNILS_MIREA in nums:
         return int(nums.index(SNILS_MIREA))
+
+
+def mpei_parser(url):
+    response = requests.get(url).content
+    soup = BeautifulSoup(response, 'lxml')
+    parse_table = soup.find_all('tr')
+    nums = [el.text for el in parse_table]
+    del nums[1], nums[0]
+
+    for i in range(len(nums)):
+        if SNILS in nums[i]:
+            return int(i)

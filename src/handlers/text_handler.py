@@ -7,7 +7,7 @@ from utils import *
 def get_message(message):
     if message.text in UNIVERSITIES:
         handle_university(message)
-    elif message.text in MIREA_FACULTIES:
+    elif message.text in MIREA_FACULTIES or message.text in MPEI_FACULTIES:
         handle_faculties(message)
     elif message.text == 'Назад':
         handle_return(message)
@@ -20,12 +20,22 @@ def handle_university(message):
         buttons = create_buttons(MIREA_FACULTIES, 1, has_return=True)
         bot.send_message(message.chat.id, 'Выбери факультет', reply_markup=buttons)
 
+    if message.text == 'МЭИ':
+        buttons = create_buttons(MPEI_FACULTIES, 1, has_return=True)
+        bot.send_message(message.chat.id, 'Выбери факультет', reply_markup=buttons)
+
 
 def handle_faculties(message):
     if message.text in MIREA_FACULTIES:
         url = MIREA_URL_FACULTIES[MIREA_FACULTIES.index(message.text)]
         budget_places = MIREA_BUDGET_PLACES[MIREA_FACULTIES.index(message.text)]
         place = mirea_parser(url)
+        bot.send_message(message.chat.id, f'Бюджетных мест: {budget_places} \nМесто в списке: {place}')
+
+    if message.text in MPEI_FACULTIES:
+        url = MPEI_URL_FACULTIES[MPEI_FACULTIES.index(message.text)]
+        budget_places = MPEI_BUDGET_PLACES[MPEI_FACULTIES.index(message.text)]
+        place = mpei_parser(url)
         bot.send_message(message.chat.id, f'Бюджетных мест: {budget_places} \nМесто в списке: {place}')
 
 
