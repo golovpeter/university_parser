@@ -3,7 +3,6 @@ import requests
 from telebot import types
 from itertools import islice
 from bs4 import BeautifulSoup
-from config import bot
 
 from constants import *
 
@@ -66,11 +65,3 @@ def mpei_parser(url_arr):
                 places.append(int(i))
 
     return places
-
-
-def info_send_message(message, faculties, url_faculties, budgate_places, parse_function):
-    url = url_faculties[faculties.index(message.text)]
-    budget_places = budgate_places[faculties.index(message.text)]
-    place = parse_function(url)
-
-    return bot.send_message(message.chat.id, f'Бюджетных мест: {budget_places} \nМесто в списке: {place}')
