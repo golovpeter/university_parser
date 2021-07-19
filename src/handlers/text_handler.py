@@ -1,3 +1,5 @@
+from tabulate import tabulate
+
 from config import bot
 from constants import *
 from utils import *
@@ -17,22 +19,11 @@ def get_message(message):
 
 def handle_university(message):
     if message.text == 'РТУ МИРЭА':
-        buttons = create_buttons(MIREA_FACULTIES, 1, has_return=True)
-        bot.send_message(message.chat.id, 'Выбери факультет', reply_markup=buttons)
+        table = split_arrays(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser(MIREA_URL_FACULTIES))
+        bot.send_message(message.chat.id, '`' + tabulate(table, HEADER_TABLE, tablefmt="fancy_grid") + '`',
+                         parse_mode='Markdown')
 
     if message.text == 'МЭИ':
-        buttons = create_buttons(MPEI_FACULTIES, 1, has_return=True)
-        bot.send_message(message.chat.id, 'Выбери факультет', reply_markup=buttons)
-
-
-def handle_faculties(message):
-    if message.text in MIREA_FACULTIES:
-        info_send_message(message, MIREA_FACULTIES, MIREA_URL_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser)
-
-    if message.text in MPEI_FACULTIES:
-        info_send_message(message, MPEI_FACULTIES, MPEI_URL_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser)
-
-
-def handle_return(message):
-    buttons = create_buttons(UNIVERSITIES, 3, has_return=False)
-    bot.send_message(message.chat.id, 'Выбери ВУЗ', reply_markup=buttons)
+        table = split_arrays(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser(MPEI_URL_FACULTIES))
+        bot.send_message(message.chat.id, '`' + tabulate(table, HEADER_TABLE, tablefmt="fancy_grid") + '`',
+                         parse_mode='Markdown')

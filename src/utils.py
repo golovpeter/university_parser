@@ -26,26 +26,46 @@ def create_buttons(arr, chunk_length, has_return=False):
     return keyboard
 
 
-def mirea_parser(url):
-    response = requests.get(url).content
-    soup = BeautifulSoup(response, 'lxml')
-    parse_table = soup.find_all('td', class_='fio')
-    nums = [el.text for el in parse_table]
+def split_arrays(first_array, second_array, third_array):
+    split_array = []
 
-    if SNILS_MIREA in nums:
-        return int(nums.index(SNILS_MIREA))
+    for i in range(len(first_array)):
+        array = [first_array[i], second_array[i], third_array[i]]
+        split_array.append(array)
+
+    return split_array
 
 
-def mpei_parser(url):
-    response = requests.get(url).content
-    soup = BeautifulSoup(response, 'lxml')
-    parse_table = soup.find_all('tr')
-    nums = [el.text for el in parse_table]
-    del nums[1], nums[0]
+def mirea_parser(url_arr):
+    places = []
 
-    for i in range(len(nums)):
-        if SNILS in nums[i]:
-            return int(i)
+    for url in url_arr:
+        response = requests.get(url).content
+        soup = BeautifulSoup(response, 'lxml')
+        parse_table = soup.find_all('td', class_='fio')
+        nums = [el.text for el in parse_table]
+
+        if SNILS_MIREA in nums:
+            places.append(int(nums.index(SNILS_MIREA)))
+
+    return places
+
+
+def mpei_parser(url_arr):
+    places = []
+
+    for url in url_arr:
+        response = requests.get(url).content
+        soup = BeautifulSoup(response, 'lxml')
+        parse_table = soup.find_all('tr')
+        nums = [el.text for el in parse_table]
+        del nums[1], nums[0]
+
+        for i in range(len(nums)):
+            if SNILS in nums[i]:
+                places.append(int(i))
+
+    return places
 
 
 def info_send_message(message, faculties, url_faculties, budgate_places, parse_function):
