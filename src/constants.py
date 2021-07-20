@@ -1,5 +1,5 @@
-SNILS_MIREA = '169-652-599-29'
-SNILS = '16965259929'
+SNILS_MIREA = ''
+SNILS = ''
 
 UNIVERSITIES = ['РТУ МИРЭА', 'МЭИ']
 MIREA_FACULTIES = ['Программная инженерия',
