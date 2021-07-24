@@ -1,5 +1,3 @@
-from telebot import types
-
 from config import bot
 from utils import create_buttons
 from constants import UNIVERSITIES

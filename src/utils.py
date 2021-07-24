@@ -4,7 +4,7 @@ from telebot import types
 from itertools import islice
 from bs4 import BeautifulSoup
 
-from constants import *
+from config import SNILS, SNILS_MIREA
 
 
 def chunk(it, size):

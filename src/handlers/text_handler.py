@@ -9,10 +9,6 @@ from utils import *
 def get_message(message):
     if message.text in UNIVERSITIES:
         handle_university(message)
-    elif message.text in MIREA_FACULTIES or message.text in MPEI_FACULTIES:
-        handle_faculties(message)
-    elif message.text == 'Назад':
-        handle_return(message)
     else:
         bot.send_message(message.chat.id, 'Я тебя не понимаю')
 
