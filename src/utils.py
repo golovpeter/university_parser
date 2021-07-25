@@ -25,16 +25,6 @@ def create_buttons(arr, chunk_length, has_return=False):
     return keyboard
 
 
-def split_arrays(first_array, second_array, third_array):
-    split_array = []
-
-    for i in range(len(first_array)):
-        array = [first_array[i], second_array[i], third_array[i]]
-        split_array.append(array)
-
-    return split_array
-
-
 def mirea_parser(url_arr):
     places = []
 
@@ -65,3 +55,17 @@ def mpei_parser(url_arr):
                 places.append(int(i))
 
     return places
+
+
+def create_string(faculties, budget_places, places):
+    res_str = ''
+
+    for i in range(len(faculties)):
+        inter_str = ''
+        if i != len(faculties) - 1:
+            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n' + ' ' + '\n'
+        else:
+            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n'
+        res_str += inter_str
+
+    return res_str

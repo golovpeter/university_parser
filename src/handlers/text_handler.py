@@ -1,5 +1,3 @@
-from tabulate import tabulate
-
 from config import bot
 from constants import *
 from utils import *
@@ -14,12 +12,12 @@ def get_message(message):
 
 
 def handle_university(message):
-    if message.text == 'РТУ МИРЭА':
-        table = split_arrays(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser(MIREA_URL_FACULTIES))
-        bot.send_message(message.chat.id, '`' + tabulate(table, HEADER_TABLE, tablefmt="fancy_grid") + '`',
+    if message.text == UNIVERSITIES[0]:
+        bot.send_message(message.chat.id, create_string(MIREA_FACULTIES, MIREA_BUDGET_PLACES,
+                                                        mirea_parser(MIREA_URL_FACULTIES)),
                          parse_mode='Markdown')
 
-    if message.text == 'МЭИ':
-        table = split_arrays(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser(MPEI_URL_FACULTIES))
-        bot.send_message(message.chat.id, '`' + tabulate(table, HEADER_TABLE, tablefmt="fancy_grid") + '`',
+    if message.text == UNIVERSITIES[1]:
+        bot.send_message(message.chat.id,
+                         create_string(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser(MPEI_URL_FACULTIES)),
                          parse_mode='Markdown')
