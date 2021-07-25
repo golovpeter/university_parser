@@ -63,9 +63,11 @@ def create_string(faculties, budget_places, places):
     for i in range(len(faculties)):
         inter_str = ''
         if i != len(faculties) - 1:
-            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n' + ' ' + '\n'
+            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' \
+                         + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n' + ' ' + '\n'
         else:
-            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n'
+            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' \
+                         + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n'
         res_str += inter_str
 
     return res_str
