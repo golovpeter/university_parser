@@ -4,7 +4,7 @@ from telebot import types
 from itertools import islice
 from bs4 import BeautifulSoup
 
-from config import SNILS, SNILS_MIREA
+from config import SNILS, SNILS_MIREA, MGSU_NUM
 
 
 def chunk(it, size):
@@ -25,6 +25,7 @@ def create_buttons(arr, chunk_length, has_return=False):
     return keyboard
 
 
+# TODO: убирать людей, которые подали согласие в другой КГ
 def mirea_parser(url_arr):
     places = []
 
@@ -57,11 +58,27 @@ def mpei_parser(url_arr):
     return places
 
 
+def mgsu_parser(url):
+    mgsu_data = {'n_delo': MGSU_NUM}
+    s = requests.Session()
+    content = (s.post(url, data=mgsu_data)).text
+    soup = BeautifulSoup(content, 'lxml')
+    parse_table = soup.find_all('tr')
+
+    nums = [(el.text.replace(' ', '').replace('\r', ' ').
+             replace('\n', ' ')).split() for el in parse_table]
+    del nums[0:7]
+    places, dormitory = [el[3] for el in nums], [el[7] for el in nums]
+
+    return places, dormitory
+
+
 def create_string(faculties, budget_places, places):
     res_str = ''
 
     for i in range(len(faculties)):
         inter_str = ''
+
         if i != len(faculties) - 1:
             inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' \
                          + '\n' + f'Место в конкурсном списке: {places[i]}' + '\n' + ' ' + '\n'
