@@ -14,12 +14,15 @@ def get_message(message):
 def handle_university(message):
     if message.text == UNIVERSITIES[0]:
         bot.send_message(message.chat.id,
-                         create_string(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser(MIREA_URL_FACULTIES)))
+                         create_string(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser(MIREA_URL_FACULTIES)[0],
+                                       mirea_parser(MIREA_URL_FACULTIES)[1]))
 
     if message.text == UNIVERSITIES[1]:
         bot.send_message(message.chat.id,
-                         create_string(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser(MPEI_URL_FACULTIES)))
+                         create_string(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser(MPEI_URL_FACULTIES)[0],
+                                       mpei_parser(MPEI_URL_FACULTIES)[1]))
 
     if message.text == UNIVERSITIES[2]:
         bot.send_message(message.chat.id,
-                         create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_parser(MGSU_URL)[0]))
+                         mgsu_create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_parser(MGSU_URL)[0],
+                                            mgsu_parser(MGSU_URL)[1], mgsu_parser(MGSU_URL)[2]))
