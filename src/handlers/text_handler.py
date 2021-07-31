@@ -24,5 +24,5 @@ def handle_university(message):
 
     if message.text == UNIVERSITIES[2]:
         bot.send_message(message.chat.id,
-                         mgsu_create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_parser(MGSU_URL)[0],
-                                            mgsu_parser(MGSU_URL)[1]))
+                         create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_parser(MGSU_URL)[0],
+                                       mgsu_parser(MGSU_URL)[1]))

@@ -26,36 +26,42 @@ def create_buttons(arr, chunk_length, has_return=False):
 
 
 def mirea_parser(url_arr):
-    places, agree_places = [], []
-    dropout_counter, agree_counter, place = 0, 0, 0
+    places, places_with_consent = [], []
+    place, dropout_counter, agree_counter, place_with_consent = 0, 0, 0, 0
 
     for url in url_arr:
         response = requests.get(url).content
         soup = BeautifulSoup(response, 'lxml')
         snils_table = soup.find_all('td', class_='fio')
         status_table = soup.find_all('td', class_='status')
+        sum_table = soup.find_all('td', class_='sum')
+        sum_table = [sum_table[i].text for i in range(0, len(sum_table), 2)]
 
-        nums = [[snils_table[i].text, status_table[i].text] for i in range(len(snils_table))]
+        nums = [[snils_table[i].text, sum_table[i], status_table[i].text] for i in range(len(snils_table))]
 
         for el in nums:
-            if 'Согласие на др. конкурсе' in el[1]:
+            if 'Согласие на др. конкурсе' in el[2]:
                 dropout_counter += 1
-            if 'Рассматривается к зачислению' in el[1]:
+
+            if 'Рассматривается к зачислению' in el[2]:
                 agree_counter += 1
+                if int(el[1]) < 244 and place_with_consent == 0:
+                    place_with_consent = agree_counter
+
             if el[0] == SNILS_MIREA:
                 place = int(nums.index(el))
 
         places.append(place - dropout_counter)
-        agree_places.append(agree_counter)
+        places_with_consent.append(place_with_consent)
 
-        place, dropout_counter, agree_counter = 0, 0, 0
+        place, dropout_counter, agree_counter, place_with_consent = 0, 0, 0, 0
 
-    return places, agree_places
+    return places, places_with_consent
 
 
 def mpei_parser(url_arr):
     places = []
-    agree_places = ['-', '-', '-', '-', '-', '-', ]  # Временная затычка для МЭИ
+    places_with_consent = ['-', '-', '-', '-', '-', '-']  # Временная затычка для М  ЭИ
 
     for url in url_arr:
         response = requests.get(url).content
@@ -68,7 +74,7 @@ def mpei_parser(url_arr):
             if SNILS in nums[i]:
                 places.append(int(i))
 
-    return places, agree_places
+    return places, places_with_consent
 
 
 def mgsu_parser(url):
@@ -87,27 +93,7 @@ def mgsu_parser(url):
     return places, places_with_consent
 
 
-def create_string(faculties, budget_places, places, agree_places):
-    res_str = ''
-
-    for i in range(len(faculties)):
-        inter_str = ''
-
-        if i != len(faculties) - 1:
-            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' + '\n' \
-                         + f'Место в конкурсном списке: {places[i]}' + '\n' \
-                         + f'Согласий подано: {agree_places[i]}' + '\n' + ' ' + '\n'
-        else:
-            inter_str += faculties[i] + '\n' + f'Бюджетных мест: {budget_places[i]}' + '\n' \
-                         + f'Место в конкурсном списке: {places[i]}' + '\n' \
-                         + f'Согласий подано: {agree_places[i]}' + '\n'
-
-        res_str += inter_str
-
-    return res_str
-
-
-def mgsu_create_string(faculties, budget_places, places, place_with_consent):
+def create_string(faculties, budget_places, places, place_with_consent):
     res_str = ''
 
     for i in range(len(faculties)):
