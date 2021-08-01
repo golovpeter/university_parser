@@ -6,6 +6,8 @@ from telebot import types
 
 from config import SNILS, SNILS_MIREA, MGSU_NUM
 
+from constants import MIREA_URL_FACULTIES
+
 
 def chunk(it, size):
     it = iter(it)
@@ -40,7 +42,7 @@ def mirea_parser(url_arr):
         nums = [[snils_table[i].text, sum_table[i], status_table[i].text] for i in range(len(snils_table))]
 
         for el in nums:
-            if 'Согласие на др. конкурсе' in el[2]:
+            if 'Согласие на др. конкурсе' in el[2] and int(el[1]) >= 244:
                 dropout_counter += 1
 
             if 'Рассматривается к зачислению' in el[2]:
