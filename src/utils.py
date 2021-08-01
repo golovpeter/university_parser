@@ -6,8 +6,6 @@ from telebot import types
 
 from config import SNILS, SNILS_MIREA, MGSU_NUM
 
-from constants import MIREA_URL_FACULTIES
-
 
 def chunk(it, size):
     it = iter(it)
@@ -61,6 +59,7 @@ def mirea_parser(url_arr):
     return places, places_with_consent
 
 
+# TODO: неправильно определние места с погрешностью 20-30
 def mpei_parser(url_arr):
     places = []
     places_with_consent = ['-', '-', '-', '-', '-', '-']  # Временная затычка для М  ЭИ
