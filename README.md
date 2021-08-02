@@ -1,1 +1,1 @@
-#  Telegram bot for tracking the competition of universities
+##  Бот для отслеживания моего конкурса при постулпений в ВУЗ
