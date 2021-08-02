@@ -59,10 +59,9 @@ def mirea_parser(url_arr):
     return places, places_with_consent
 
 
-# TODO: неправильно определние места с погрешностью 20-30
 def mpei_parser(url_arr):
     places = []
-    places_with_consent = ['-', '-', '-', '-', '-', '-']  # Временная затычка для М  ЭИ
+    places_with_consent = ['-', '-', '-', '-', '-', '-']  # Временная затычка для МЭИ
 
     for url in url_arr:
         response = requests.get(url).content
@@ -73,7 +72,7 @@ def mpei_parser(url_arr):
 
         for i in range(len(nums)):
             if SNILS in nums[i]:
-                places.append(int(i))
+                places.append(int(i - 1))
 
     return places, places_with_consent
 
