@@ -62,6 +62,8 @@ def mirea_parser(url_arr):
 def mpei_parser(url_arr):
     places = []
     places_with_consent = ['-', '-', '-', '-', '-', '-']  # Временная затычка для МЭИ
+    dropout_counter = 0
+    snils_found = False
 
     for url in url_arr:
         response = requests.get(url).content
@@ -71,8 +73,11 @@ def mpei_parser(url_arr):
         del nums[1], nums[0]
 
         for i in range(len(nums)):
+            if 'Согласие в другой КГ' in nums[i] and snils_found != True:
+                dropout_counter += 1
             if SNILS in nums[i]:
-                places.append(int(i - 1))
+                snils_found = True
+                places.append(int(i - 1) - dropout_counter)
 
     return places, places_with_consent
 
