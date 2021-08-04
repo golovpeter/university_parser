@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from telebot import types
 
 from config import SNILS, SNILS_MIREA, MGSU_NUM
+from constants import MPEI_URL_FACULTIES
 
 
 def chunk(it, size):
@@ -73,11 +74,14 @@ def mpei_parser(url_arr):
         del nums[1], nums[0]
 
         for i in range(len(nums)):
-            if 'Согласие в другой КГ' in nums[i] and snils_found != True:
+            if 'Согласие в другой КГ' in nums[i] and snils_found != False:
                 dropout_counter += 1
+
             if SNILS in nums[i]:
                 snils_found = True
                 places.append(int(i - 1) - dropout_counter)
+
+        dropout_counter = 0
 
     return places, places_with_consent
 
