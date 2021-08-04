@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from telebot import types
 
 from config import SNILS, SNILS_MIREA, MGSU_NUM
-from constants import MPEI_URL_FACULTIES
 
 
 def chunk(it, size):
