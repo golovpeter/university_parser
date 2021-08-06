@@ -9,7 +9,7 @@ def get_message(message):
     if message.text in UNIVERSITIES:
         handle_university(message)
     else:
-        bot.send_message(message.chat.id, 'Обновляется')
+        bot.send_message(message.chat.id, 'Я тебя не понимаю')
 
 
 def handle_university(message):
@@ -29,7 +29,7 @@ def handle_university(message):
 
     if message.text == UNIVERSITIES[2]:
         if len(mgsu_places) == 0:
-            bot.send_message(message.chat.id, 'Ещё не обработано. Подождите')
+            bot.send_message(message.chat.id, 'Обновляется')
         else:
             bot.send_message(message.chat.id,
                              create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_places, mgsu_places_with_consent))
