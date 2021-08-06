@@ -6,7 +6,7 @@ MIREA_FACULTIES = ['ПРОГРАММНАЯ ИНЖЕНЕРИЯ',
                    'ИНФОРМАТИКА И ВЫЧИСЛИТЕЛЬНАЯ ТЕХНИКА(ИТ)',
                    'ИНФОРМАТИКА И ВЫЧИСЛИТЕЛЬНАЯ ТЕХНИКА(Киб)']
 
-MIREA_BUDGET_PLACES = ['240', '45', '96', '42', '24', '48']
+MIREA_BUDGET_PLACES = ['221', '52', '112', '35', '98', '167']
 
 MIREA_URL_FACULTIES = [
     'https://priem.mirea.ru/accepted-entrants-list/personal_code_rating.php?competition=1700362082409557302',
@@ -24,7 +24,7 @@ MPEI_FACULTIES = [
     'ИНФОРМАЦИОННАЯ БЕЗОПАСНОСТЬ',
     'УПРАВЛЕНИЕ В ТЕХНИЧЕСКИХ СИСТЕМАХ']
 
-MPEI_BUDGET_PLACES = ['60', '40', '175', '25', '46', '75']
+MPEI_BUDGET_PLACES = ['55', '38', '174', '24', '43', '75']
 
 MPEI_URL_FACULTIES = [
     'https://www.pkmpei.ru/inform/list581bacc.html',

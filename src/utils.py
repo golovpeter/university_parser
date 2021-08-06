@@ -1,10 +1,12 @@
-from itertools import islice
-
 import requests
+
+from itertools import islice
 from bs4 import BeautifulSoup
 from telebot import types
 
+from constants import MIREA_URL_FACULTIES, MPEI_URL_FACULTIES, MGSU_URL
 from config import SNILS, SNILS_MIREA, MGSU_NUM
+from cache import *
 
 
 def chunk(it, size):
@@ -26,7 +28,6 @@ def create_buttons(arr, chunk_length, has_return=False):
 
 
 def mirea_parser(url_arr):
-    places, places_with_consent = [], []
     place, dropout_counter, agree_counter, place_with_consent = 0, 0, 0, 0
 
     for url in url_arr:
@@ -51,17 +52,13 @@ def mirea_parser(url_arr):
             if el[0] == SNILS_MIREA:
                 place = int(nums.index(el))
 
-        places.append(place - dropout_counter)
-        places_with_consent.append(place_with_consent)
+        mirea_places.append(place - dropout_counter)
+        mirea_places_with_consent.append(place_with_consent)
 
         place, dropout_counter, agree_counter, place_with_consent = 0, 0, 0, 0
 
-    return places, places_with_consent
-
 
 def mpei_parser(url_arr):
-    places = []
-    places_with_consent = ['-', '-', '-', '-', '-', '-']  # Временная затычка для МЭИ
     dropout_counter = 0
     snils_found = False
 
@@ -78,11 +75,9 @@ def mpei_parser(url_arr):
 
             if SNILS in nums[i]:
                 snils_found = True
-                places.append(int(i - 1) - dropout_counter)
+                mpei_places.append(int(i - 1) - dropout_counter)
 
         dropout_counter = 0
-
-    return places, places_with_consent
 
 
 def mgsu_parser(url):
@@ -95,10 +90,24 @@ def mgsu_parser(url):
     nums = [(el.text.replace(' ', '').replace('\r', ' ').
              replace('\n', ' ')).split() for el in parse_table]
     del nums[0:7]
-    places = [el[3] for el in nums]
-    places_with_consent = [el[4] for el in nums]
 
-    return places, places_with_consent
+    [mgsu_places.append(el[3]) for el in nums]
+    [mgsu_places_with_consent.append(el[4]) for el in nums]
+
+
+def clear_cache():
+    mirea_places.clear()
+    mirea_places_with_consent.clear()
+    mpei_places.clear()
+    mgsu_places.clear()
+    mgsu_places_with_consent.clear()
+
+
+def parser():
+    clear_cache()
+    mirea_parser(MIREA_URL_FACULTIES)
+    mpei_parser(MPEI_URL_FACULTIES)
+    mgsu_parser(MGSU_URL)
 
 
 def create_string(faculties, budget_places, places, place_with_consent):

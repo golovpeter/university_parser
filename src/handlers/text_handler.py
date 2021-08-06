@@ -1,6 +1,7 @@
 from config import bot
 from constants import *
 from utils import *
+from cache import *
 
 
 @bot.message_handler(content_types=['text'])
@@ -8,21 +9,27 @@ def get_message(message):
     if message.text in UNIVERSITIES:
         handle_university(message)
     else:
-        bot.send_message(message.chat.id, 'Я тебя не понимаю')
+        bot.send_message(message.chat.id, 'Обновляется')
 
 
 def handle_university(message):
     if message.text == UNIVERSITIES[0]:
-        bot.send_message(message.chat.id,
-                         create_string(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_parser(MIREA_URL_FACULTIES)[0],
-                                       mirea_parser(MIREA_URL_FACULTIES)[1]))
+        if len(mirea_places) == 0:
+            bot.send_message(message.chat.id, 'Обновляется')
+        else:
+            bot.send_message(message.chat.id,
+                             create_string(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_places, mirea_places_with_consent))
 
     if message.text == UNIVERSITIES[1]:
-        bot.send_message(message.chat.id,
-                         create_string(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_parser(MPEI_URL_FACULTIES)[0],
-                                       mpei_parser(MPEI_URL_FACULTIES)[1]))
+        if len(mpei_places) == 0:
+            bot.send_message(message.chat.id, 'Обновляется')
+        else:
+            bot.send_message(message.chat.id,
+                             create_string(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_places, mpei_places_with_consent))
 
     if message.text == UNIVERSITIES[2]:
-        bot.send_message(message.chat.id,
-                         create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_parser(MGSU_URL)[0],
-                                       mgsu_parser(MGSU_URL)[1]))
+        if len(mgsu_places) == 0:
+            bot.send_message(message.chat.id, 'Ещё не обработано. Подождите')
+        else:
+            bot.send_message(message.chat.id,
+                             create_string(MGSU_FACULTIES, MGSU_BUDGET_PLACES, mgsu_places, mgsu_places_with_consent))

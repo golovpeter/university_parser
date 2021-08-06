@@ -1,5 +1,4 @@
 import os
-
 import telebot
 
 APP_URL = 'https://university-contest-parser.herokuapp.com/'

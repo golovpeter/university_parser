@@ -1,16 +1,22 @@
 import logging
 import os
 import time
-
 import telebot
+
 from flask import Flask, request
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from config import bot, TOKEN, APP_URL
+from utils import parser
 
 import handlers.start_handler
 import handlers.text_handler
 
 server = Flask(__name__)
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=parser, trigger="interval", seconds=3600)
+scheduler.start()
 
 
 @server.route('/' + TOKEN, methods=['POST'])
