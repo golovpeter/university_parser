@@ -14,21 +14,21 @@ def get_message(message):
 
 def handle_university(message):
     if message.text == UNIVERSITIES[0]:
-        if len(mirea_places) == 0:
+        if len(mirea_places) != len(MIREA_FACULTIES):
             bot.send_message(message.chat.id, 'Обновляется')
         else:
             bot.send_message(message.chat.id,
                              create_string(MIREA_FACULTIES, MIREA_BUDGET_PLACES, mirea_places, mirea_places_with_consent))
 
     if message.text == UNIVERSITIES[1]:
-        if len(mpei_places) == 0:
+        if len(mpei_places) != len(MPEI_FACULTIES):
             bot.send_message(message.chat.id, 'Обновляется')
         else:
             bot.send_message(message.chat.id,
                              create_string(MPEI_FACULTIES, MPEI_BUDGET_PLACES, mpei_places, mpei_places_with_consent))
 
     if message.text == UNIVERSITIES[2]:
-        if len(mgsu_places) == 0:
+        if len(mgsu_places) != len(MGSU_FACULTIES):
             bot.send_message(message.chat.id, 'Обновляется')
         else:
             bot.send_message(message.chat.id,
