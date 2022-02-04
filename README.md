@@ -1,1 +1,1 @@
-##  Бот для отслеживания моего конкурса при постулпений в ВУЗ
+##  A bot for tracking my competition when entering a university
